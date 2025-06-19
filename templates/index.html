@@ -1,0 +1,48 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <title>Budget Tracker</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      input,
+      select {
+        margin: 5px;
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Budget Tracker</h1>
+
+    <form method="POST">
+      <input
+        type="text"
+        name="description"
+        placeholder="Description"
+        required
+      />
+      <input type="number" name="amount" placeholder="Amount" required />
+      <select name="type">
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+      <button type="submit">Add</button>
+    </form>
+
+    <h2>Transactions</h2>
+    <ul>
+      {% for entry in entries %}
+      <li>{{entry.type.title()}} - {{entry.description}}: ${{entry.amount}}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
