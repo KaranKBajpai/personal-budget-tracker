@@ -8,17 +8,27 @@ entries = []
 @app.route('/', methods=['GET', 'POST'])
 def index():
     global entries
+
+
     if request.method == 'POST':
         description = request.form["description"]
         amount = float(request.form["amount"])
         type = request.form["type"]
+
         entries.append({
             'description': description,
             'amount': amount,
             'type': type
         })
+
         return redirect('/')
-    return render_template('index.html', entries=entries)
+    
+    # Calculate current balance 
+    income = sum(entry['amount'] for entry in entries if entry['type'] == 'income')
+    expense = sum(entry['amount'] for entry in entries if entry['type'] == 'expense')
+    balance = income - expense
+
+    return render_template('index.html', entries=entries, balance=balance)
 
 if __name__ == '__main__':
     app.run(debug=True)
