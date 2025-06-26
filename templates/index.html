@@ -36,20 +36,32 @@
         <option value="income">Income</option>
         <option value="expense">Expense</option>
       </select>
+      <select name="category">
+        <option value="None">-- Select Category --</option>
+        <option value="Salary">Salary</option>
+        <option value="Groceries">Groceries</option>
+        <option value="Rent">Rent</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Misc">Misc</option>
+      </select>
       <button type="submit">Add</button>
     </form>
 
     <h2>Transactions</h2>
     <ul>
       {% for entry in entries %}
-      <li>{{entry.type.title()}} - {{entry.description}}: ${{entry.amount}}</li>
-      <form
-        action="/delete/{{ entry.id }}"
-        method="POST"
-        style="display: inline"
-      >
-        <button type="submit">Delete</button>
-      </form>
+      <li>
+        {{entry.type.title()}} - {{entry.description}}: ${{entry.amount}} {% if
+        entry.category and entry.category != "None" %} ({{ entry.category }}) {%
+        endif %}
+        <form
+          action="/delete/{{ entry.id }}"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit">Delete</button>
+        </form>
+      </li>
       {% endfor %}
     </ul>
   </body>

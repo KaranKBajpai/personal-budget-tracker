@@ -17,6 +17,7 @@ class Entry(db.Model):
     description = db.Column(db.String(100), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     type = db.Column(db.String(10), nullable=False)
+    category = db.Column(db.String(50), nullable=True)
 
 # Create the database file (only runs once)
 if not os.path.exists('budget.db'):
@@ -27,10 +28,11 @@ if not os.path.exists('budget.db'):
 def index():
     if request.method == 'POST':
         description = request.form["description"]
+        category = request.form["category"]
         amount = float(request.form["amount"])
         type = request.form["type"]
 
-        new_entry = Entry(description=description, amount=amount, type=type)
+        new_entry = Entry(description=description, amount=amount, type=type, category=category)
         db.session.add(new_entry)
         db.session.commit()
 
