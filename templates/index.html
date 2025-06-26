@@ -43,6 +43,13 @@
     <ul>
       {% for entry in entries %}
       <li>{{entry.type.title()}} - {{entry.description}}: ${{entry.amount}}</li>
+      <form
+        action="/delete/{{ entry.id }}"
+        method="POST"
+        style="display: inline"
+      >
+        <button type="submit">Delete</button>
+      </form>
       {% endfor %}
     </ul>
   </body>

@@ -35,6 +35,7 @@ def index():
         db.session.commit()
 
         return redirect('/')
+
     
     entries = Entry.query.all()
 
@@ -44,6 +45,13 @@ def index():
     balance = income - expense
 
     return render_template('index.html', entries=entries, balance=balance)
+
+@app.route('/delete/<int:id>', methods=['POST'])
+def delete(id):
+    entry = Entry.query.get_or_404(id)
+    db.session.delete(entry)
+    db.session.commit()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
